@@ -28,7 +28,8 @@ function cariTitikTengah(controlPoint1, controlPoint2) {
     };
 }
 
-// Fungsi yang buat cari bezier yang titiknya lebih dari 3
+// Fungsi yang buat cari bezier yang titiknya lebih dari 3 ternyata ini juga gaboleh
+/*
 function divideConquerBezierMultiple(points, t) {
     if (points.length === 1) {
         return points[0];
@@ -42,24 +43,5 @@ function divideConquerBezierMultiple(points, t) {
     }
 
     return divideConquerBezierMultiple(newPoints, t);
-}
-
-// Fungsi yang buat cari bezier yang titiknya lebih dari 3 tapi pake built in function (Kurang bagus sih jujur)
-/*
-function multicurve(points, context) {
-    var p0, p1, midx, midy;
-
-    context.moveTo(points[0].x, points[0].y);
-
-    for(var i = 1; i < points.length - 2; i += 1) {
-        p0 = points[i];
-        p1 = points[i + 1];
-        midx = (p0.x + p1.x) / 2;
-        midy = (p0.y + p1.y) / 2;
-        context.quadraticCurveTo(p0.x, p0.y, midx, midy);
-    }
-    p0 = points[points.length - 2];
-    p1 = points[points.length - 1];
-    context.quadraticCurveTo(p0.x, p0.y, p1.x, p1.y);
 }
 */
