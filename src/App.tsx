@@ -7,31 +7,74 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "./components/ui/button";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Point, TempPoint } from "./types";
+import BezierCurveChart from "./components/BezierCurveChart";
 
 function App() {
-  const [points, setPoints] = useState([
+  const [iteration, setIteration] = useState(99);
+
+  const [points, setPoints] = useState<TempPoint[]>([
     { x: 0, y: 0 },
     { x: 0, y: 0 },
     { x: 0, y: 0 },
   ]);
 
+  const [finalPoints, setFinalPoints] = useState<Point[]>([]);
+
+  const convertPoints = () => {
+    if (!isValidInput()) {
+      console.error("Invalid input");
+      return;
+    }
+    // Conversion logic here
+    const newFinalPoints: Point[] = points.map(({ x, y }) => ({
+      x: Number(x),
+      y: Number(y),
+    }));
+    setFinalPoints(newFinalPoints);
+  };
+
+  const isValidInput = () => {
+    for (const point of points) {
+      if (
+        typeof point.x !== "number" ||
+        typeof point.y !== "number" ||
+        isNaN(point.x) ||
+        isNaN(point.y)
+      ) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   const handleInputChange = (
     index: number,
     field: "x" | "y",
-    value: number
+    value: string
   ) => {
     const newPoints = [...points];
-    newPoints[index][field] = value;
+    newPoints[index][field] = value === "" ? "" : Number(value);
     setPoints(newPoints);
   };
 
   const addPoint = () => {
     setPoints([...points, { x: 0, y: 0 }]);
   };
-
   return (
     <>
       <div className="flex flex-col h-screen">
@@ -51,7 +94,7 @@ function App() {
               {points.map((point, index) => (
                 <div
                   key={index}
-                  className="flex justify-center items-center text-center mb-2"
+                  className="flex justify-center items-center text-center mb-2 mt-1"
                 >
                   <Label htmlFor={`x${index}`} className="text-2xl mr-4">
                     x
@@ -62,7 +105,7 @@ function App() {
                     className="w-20 text-base"
                     value={point.x}
                     onChange={(e) =>
-                      handleInputChange(index, "x", Number(e.target.value))
+                      handleInputChange(index, "x", e.target.value)
                     }
                   />
                   <Label htmlFor={`y${index}`} className="text-2xl mr-4 ml-4">
@@ -74,7 +117,7 @@ function App() {
                     className="w-20 text-base"
                     value={point.y}
                     onChange={(e) =>
-                      handleInputChange(index, "y", Number(e.target.value))
+                      handleInputChange(index, "y", e.target.value)
                     }
                   />
                 </div>
@@ -89,7 +132,42 @@ function App() {
               </div>
             </CardContent>
             <CardFooter className="flex justify-center items-center">
-              <Button>Curve it!</Button>
+              <Drawer>
+                <DrawerTrigger>
+                  <Button onClick={convertPoints} disabled={!isValidInput()}>
+                    Curve it!
+                  </Button>
+                </DrawerTrigger>
+                {isValidInput() && (
+                  <DrawerContent className="h-5/6 flex items-center justify-center">
+                    <div className="w-3/4">
+                      <DrawerHeader>
+                        <DrawerTitle>Bezier Curve Result</DrawerTitle>
+                      </DrawerHeader>
+                      <DrawerDescription>
+                        <div className="w-full flex items-center justify-center">
+                          <BezierCurveChart
+                            controlPoints={finalPoints}
+                            iteration={iteration}
+                          />
+                        </div>
+                      </DrawerDescription>
+                      <DrawerFooter>
+                        <Slider
+                          defaultValue={[iteration]}
+                          max={100}
+                          min={1}
+                          step={1}
+                          onValueChange={(value) => setIteration(value[0])}
+                        />
+                        <span className="mb-4"></span>
+                        <p>??? ms</p>
+                        <DrawerClose>Close</DrawerClose>
+                      </DrawerFooter>
+                    </div>
+                  </DrawerContent>
+                )}
+              </Drawer>
             </CardFooter>
           </Card>
         </div>
