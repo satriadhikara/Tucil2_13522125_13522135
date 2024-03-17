@@ -24,9 +24,12 @@ import {
 import { Point, TempPoint } from "./types";
 import BezierCurveChart from "./components/BezierCurveChart";
 
+type TempIteration = number | string;
+
 function App() {
-  const [iteration, setIteration] = useState(10);
-  const [staticIteration, setStaticIteration] = useState(iteration);
+  const [iteration, setIteration] = useState<TempIteration>("");
+  const [iterationLevel, setIterationLevel] = useState<number>(0);
+  const [staticIteration, setStaticIteration] = useState(iterationLevel);
 
   const [points, setPoints] = useState<TempPoint[]>([
     { x: 0, y: 0 },
@@ -45,13 +48,13 @@ function App() {
       console.error("Invalid input");
       return;
     }
-    // Conversion logic here
     const newFinalPoints: Point[] = points.map(({ x, y }) => ({
       x: Number(x),
       y: Number(y),
     }));
+    setIterationLevel(Number(iteration));
     setFinalPoints(newFinalPoints);
-    setStaticIteration(iteration);
+    setStaticIteration(Number(iteration));
   };
 
   const isValidInput = () => {
@@ -64,6 +67,9 @@ function App() {
       ) {
         return false;
       }
+    }
+    if (typeof iteration !== "number" || isNaN(iteration) || iteration < 1) {
+      return false;
     }
     return true;
   };
@@ -78,7 +84,8 @@ function App() {
     setPoints(newPoints);
   };
 
-  const handleIterationChange = (value: number) => {
+  const handleIterationChange = (value: TempIteration) => {
+    value = value === "" ? "" : Number(value);
     setIteration(value);
   };
 
@@ -176,17 +183,15 @@ function App() {
                   <Input
                     type="number"
                     className="h-8 w-28 mr-2"
-                    placeholder="Iterasion"
+                    placeholder="Iteration"
                     value={iteration}
-                    onChange={(e) =>
-                      handleIterationChange(Number(e.target.value))
-                    }
+                    onChange={(e) => handleIterationChange(e.target.value)}
                   />
                   <DrawerTrigger>
                     <Button
                       onClick={convertPoints}
                       disabled={!isValidInput()}
-                      className="h-8 w-16 py-5 px-10"
+                      className="h-8 w-16 py-5 px-10 disabled:cursor-not-allowed"
                     >
                       Curve it!
                     </Button>
@@ -202,17 +207,17 @@ function App() {
                         <div className="w-full flex items-center justify-center">
                           <BezierCurveChart
                             controlPoints={finalPoints}
-                            iteration={iteration + 1}
+                            iteration={iterationLevel + 1}
                           />
                         </div>
                       </DrawerDescription>
                       <DrawerFooter>
                         <Slider
-                          defaultValue={[iteration]}
+                          defaultValue={[iterationLevel]}
                           max={staticIteration}
                           min={1}
                           step={1}
-                          onValueChange={(value) => setIteration(value[0])}
+                          onValueChange={(value) => setIterationLevel(value[0])}
                         />
                         <span className="mb-4"></span>
                         <p>??? ms</p>
