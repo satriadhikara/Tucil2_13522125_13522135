@@ -33,12 +33,13 @@ const BezierCurveChart = ({
 
   const generateBezierCurve3Points = (
     controlPoints: Point[],
-    iteration: number
+    iterationLevel: number
   ) => {
     const points = [];
+    const steps = Math.pow(2, iterationLevel) + 1;
 
-    for (let i = 0; i <= iteration; i++) {
-      const t = i / iteration;
+    for (let i = 0; i <= steps - 1; i++) {
+      const t = i / (steps - 1);
       const x =
         Math.pow(1 - t, 2) * controlPoints[0].x +
         2 * (1 - t) * t * controlPoints[1].x +
@@ -55,16 +56,16 @@ const BezierCurveChart = ({
 
   const generateBezierCurveNPoints = (
     controlPoints: Point[],
-    iteration: number
+    iterationLevel: number
   ) => {
     const points = [];
     const n = controlPoints.length - 1;
-    const pascalTriangle = generatePascalTriangle(n + 1); // Generate one more row
+    const pascalTriangle = generatePascalTriangle(n + 1);
+    const steps = Math.pow(2, iterationLevel) + 1;
 
-    for (let i = 0; i <= iteration; i++) {
+    for (let i = 0; i <= steps - 1; i++) {
       const point = { x: 0, y: 0 };
-      const t = i / iteration;
-
+      const t = i / (steps - 1);
       for (let j = 0; j <= n; j++) {
         const b =
           pascalTriangle[n][j] * Math.pow(1 - t, n - j) * Math.pow(t, j);
@@ -108,6 +109,9 @@ const BezierCurveChart = ({
         type: "linear",
         beginAtZero: true,
       },
+    },
+    animation: {
+      easing: "linear",
     },
   };
 

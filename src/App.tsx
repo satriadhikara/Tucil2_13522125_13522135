@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
   Card,
   CardContent,
-  // CardDescription,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -25,13 +25,18 @@ import { Point, TempPoint } from "./types";
 import BezierCurveChart from "./components/BezierCurveChart";
 
 function App() {
-  const [iteration, setIteration] = useState(99);
+  const [iteration, setIteration] = useState(0);
+  const [staticIteration, setStaticIteration] = useState(iteration);
 
   const [points, setPoints] = useState<TempPoint[]>([
     { x: 0, y: 0 },
     { x: 0, y: 0 },
     { x: 0, y: 0 },
   ]);
+
+  const deletePoint = (index: number) => {
+    setPoints(points.filter((_, i) => i !== index));
+  };
 
   const [finalPoints, setFinalPoints] = useState<Point[]>([]);
 
@@ -46,6 +51,7 @@ function App() {
       y: Number(y),
     }));
     setFinalPoints(newFinalPoints);
+    setStaticIteration(iteration);
   };
 
   const isValidInput = () => {
@@ -81,14 +87,33 @@ function App() {
         <nav className="flex items-center justify-between p-6">
           <div className="text-black text-2xl">Tucil 2 Stima</div>
           <div className="flex space-x-4">
-            <p>13522125 13522135</p>
+            <a
+              className="hover:underline"
+              href="https://github.com/satriadhikara"
+              target="_blank"
+            >
+              13522125
+            </a>
+            <a
+              className="hover:underline"
+              href="https://github.com/ChrisCS50X"
+              target="_blank"
+            >
+              13522135
+            </a>
           </div>
         </nav>
         <div className="flex items-center justify-center flex-grow">
           <Card className="w-96">
             <CardHeader className="flex justify-center items-center">
               <CardTitle>Bézier curve</CardTitle>
-              {/* <CardDescription>Card Description</CardDescription> */}
+              <CardDescription>
+                <p>Input at least 3 points to create a Bézier curve</p>
+                <p>
+                  NOTE: The iteration is exponential, so it may take a while to
+                  load (please input a small number)
+                </p>
+              </CardDescription>
             </CardHeader>
             <CardContent className="overflow-auto max-h-96">
               {points.map((point, index) => (
@@ -96,6 +121,9 @@ function App() {
                   key={index}
                   className="flex justify-center items-center text-center mb-2 mt-1"
                 >
+                  <div>
+                    <p className="text-xl mr-4 pt-1.5">{index + 1}.</p>
+                  </div>
                   <Label htmlFor={`x${index}`} className="text-2xl mr-4">
                     x
                   </Label>
@@ -120,6 +148,13 @@ function App() {
                       handleInputChange(index, "y", e.target.value)
                     }
                   />
+                  <button
+                    onClick={() => deletePoint(index)}
+                    disabled={points.length <= 3}
+                    className="ml-4 text-red-500 hover:underline disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    Delete
+                  </button>
                 </div>
               ))}
               <div className="items-center flex justify-center">
@@ -133,11 +168,24 @@ function App() {
             </CardContent>
             <CardFooter className="flex justify-center items-center">
               <Drawer>
-                <DrawerTrigger>
-                  <Button onClick={convertPoints} disabled={!isValidInput()}>
-                    Curve it!
-                  </Button>
-                </DrawerTrigger>
+                <div className="flex justify-center items-center">
+                  <Input
+                    type="number"
+                    className="h-8 w-28 mr-2"
+                    placeholder="Iterasion"
+                    value={iteration}
+                    onChange={(e) => setIteration(Number(e.target.value))}
+                  />
+                  <DrawerTrigger>
+                    <Button
+                      onClick={convertPoints}
+                      disabled={!isValidInput()}
+                      className="h-8 w-16 py-5 px-10"
+                    >
+                      Curve it!
+                    </Button>
+                  </DrawerTrigger>
+                </div>
                 {isValidInput() && (
                   <DrawerContent className="h-5/6 flex items-center justify-center">
                     <div className="w-3/4">
@@ -155,7 +203,7 @@ function App() {
                       <DrawerFooter>
                         <Slider
                           defaultValue={[iteration]}
-                          max={100}
+                          max={staticIteration}
                           min={1}
                           step={1}
                           onValueChange={(value) => setIteration(value[0])}
