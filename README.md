@@ -8,9 +8,7 @@
 - [General Info](#general-information)
 - [Technologies Used](#technologies-used)
 - [Features](#features)
-- [Screenshots](#screenshots)
 - [Setup](#setup)
-- [Usage](#usage)
 - [Project Status](#project-status)
 - [Room for Improvement](#room-for-improvement)
 - [Acknowledgements](#acknowledgements)
@@ -19,17 +17,17 @@
 
 ## General Information
 
-- Provide general information about your project here.
-- What problem does it (intend to) solve?
-- What is the purpose of your project?
-- Why did you undertake it?
-<!-- You don't have to answer all the questions - just the ones relevant to your project. -->
+Bézier curves are smooth curves often used in graphic design, animation, and manufacturing. These curves are created by connecting several control points, which determine the shape and direction of the curve.
+
+With building Bézier curves, we can learn about the algorithm used to create the curve, which is the Midpoint Algorithm. This algorithm is used to create a Bézier curve using the Divide and Conquer method and the Brute Force method. The Divide and Conquer method is a method that divides the problem into smaller subproblems, solves the subproblems, and then combines the solutions to the subproblems to solve the original problem. The Brute Force method is a method that solves the problem by trying all possible solutions and selecting the best solution.
 
 ## Technologies Used
 
+- HTML/CSS
 - Javascript/Typescript
 - ReactJS
 - ChartJS
+- TailwindCSS
 - shadcn/ui
 - Vite
 - Vercel
@@ -41,6 +39,7 @@ List the ready features here:
 - Bézier Curve with Devide And Concuer
 - Bézier Curve with Brute Force
 - Enter iterations dynamically
+- Dark mode (coming soon)
 
 <!-- ## Screenshots
 
