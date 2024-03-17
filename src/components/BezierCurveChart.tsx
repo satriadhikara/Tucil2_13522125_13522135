@@ -15,7 +15,6 @@ const BezierCurveChart = ({
 }: BezierCurveChartProps) => {
   function generatePascalTriangle(numRows: number) {
     const triangle: number[][] = [];
-
     for (let i = 0; i < numRows; i++) {
       const row = [];
       for (let j = 0; j <= i; j++) {
@@ -36,10 +35,9 @@ const BezierCurveChart = ({
     iterationLevel: number
   ) => {
     const points = [];
-    const steps = Math.pow(2, iterationLevel) + 1;
 
-    for (let i = 0; i <= steps - 1; i++) {
-      const t = i / (steps - 1);
+    for (let i = 0; i <= iterationLevel; i++) {
+      const t = i / iterationLevel;
       const x =
         Math.pow(1 - t, 2) * controlPoints[0].x +
         2 * (1 - t) * t * controlPoints[1].x +
@@ -61,11 +59,10 @@ const BezierCurveChart = ({
     const points = [];
     const n = controlPoints.length - 1;
     const pascalTriangle = generatePascalTriangle(n + 1);
-    const steps = Math.pow(2, iterationLevel) + 1;
 
-    for (let i = 0; i <= steps - 1; i++) {
+    for (let i = 0; i <= iterationLevel; i++) {
       const point = { x: 0, y: 0 };
-      const t = i / (steps - 1);
+      const t = i / iterationLevel;
       for (let j = 0; j <= n; j++) {
         const b =
           pascalTriangle[n][j] * Math.pow(1 - t, n - j) * Math.pow(t, j);
@@ -94,7 +91,7 @@ const BezierCurveChart = ({
         borderColor: "rgba(0,0,0,1)",
         tension: 0,
         fill: false,
-        pointRadius: 3, // Hide points
+        pointRadius: 3,
       },
     ],
   };

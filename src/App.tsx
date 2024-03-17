@@ -25,7 +25,7 @@ import { Point, TempPoint } from "./types";
 import BezierCurveChart from "./components/BezierCurveChart";
 
 function App() {
-  const [iteration, setIteration] = useState(0);
+  const [iteration, setIteration] = useState(10);
   const [staticIteration, setStaticIteration] = useState(iteration);
 
   const [points, setPoints] = useState<TempPoint[]>([
@@ -78,6 +78,10 @@ function App() {
     setPoints(newPoints);
   };
 
+  const handleIterationChange = (value: number) => {
+    setIteration(value);
+  };
+
   const addPoint = () => {
     setPoints([...points, { x: 0, y: 0 }]);
   };
@@ -110,8 +114,8 @@ function App() {
               <CardDescription>
                 <p>Input at least 3 points to create a Bézier curve</p>
                 <p>
-                  NOTE: The iteration is exponential, so it may take a while to
-                  load (please input a small number)
+                  NOTE: The iteration is exponential (in dnc algorithm), so it
+                  may take a while to load
                 </p>
               </CardDescription>
             </CardHeader>
@@ -174,7 +178,9 @@ function App() {
                     className="h-8 w-28 mr-2"
                     placeholder="Iterasion"
                     value={iteration}
-                    onChange={(e) => setIteration(Number(e.target.value))}
+                    onChange={(e) =>
+                      handleIterationChange(Number(e.target.value))
+                    }
                   />
                   <DrawerTrigger>
                     <Button
@@ -196,7 +202,7 @@ function App() {
                         <div className="w-full flex items-center justify-center">
                           <BezierCurveChart
                             controlPoints={finalPoints}
-                            iteration={iteration}
+                            iteration={iteration + 1}
                           />
                         </div>
                       </DrawerDescription>
