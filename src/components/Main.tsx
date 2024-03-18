@@ -202,7 +202,7 @@ const Main = () => {
               </DropdownMenu>
             </div>
             {isValidInput() && (
-              <DrawerContent className="h-5/6 flex items-center justify-center">
+              <DrawerContent className="flex items-center justify-center">
                 <div className="w-3/4">
                   <DrawerHeader>
                     <DrawerTitle>
