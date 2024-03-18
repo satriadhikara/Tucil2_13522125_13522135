@@ -217,11 +217,7 @@ const Main = () => {
                     <div className="w-full flex items-center justify-center">
                       <BezierCurveChart
                         controlPoints={finalPoints}
-                        iteration={
-                          algorithm === "brute"
-                            ? iterationLevel + 1
-                            : iterationLevel
-                        }
+                        iteration={iterationLevel}
                         algorithm={algorithm}
                       />
                     </div>
