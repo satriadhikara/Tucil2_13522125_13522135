@@ -38,6 +38,9 @@ const BezierCurveChart = ({
     }
   }
 
+  const endTime = performance.now();
+  const executionTime = endTime - startTime;
+
   // Chart.js data and options
   const data = {
     datasets: [
@@ -73,9 +76,6 @@ const BezierCurveChart = ({
     },
     animation: false,
   };
-  const endTime = performance.now();
-  const executionTime = endTime - startTime;
-  console.log(`Execution time: ${executionTime}ms`);
 
   return [
     <>
