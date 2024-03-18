@@ -1,5 +1,6 @@
 import { Point } from "@/types";
 
+// Function for generate pascal triangle for brute force n points
 const generatePascalTriangle = (numRows: number) => {
   const triangle: number[][] = [];
   for (let i = 0; i < numRows; i++) {
@@ -17,6 +18,7 @@ const generatePascalTriangle = (numRows: number) => {
   return triangle;
 };
 
+// Function for generate bezier curve for 3 points (using bezier quadratic formula)
 const generateBezierCurve3Points = (
   controlPoints: Point[],
   iterationLevel: number
@@ -40,6 +42,7 @@ const generateBezierCurve3Points = (
   return points;
 };
 
+// Function for generate bezier curve for n points (using pascal triangle)
 const generateBezierCurveNPoints = (
   controlPoints: Point[],
   iterationLevel: number
@@ -65,6 +68,7 @@ const generateBezierCurveNPoints = (
 };
 
 // Fungsi untuk yang 3 titik doang
+// Inggris-in chris biar sama semua
 function divideConquerBezier3Points(
   control1: Point,
   control2: Point,

@@ -15,6 +15,7 @@ const BezierCurveChart = ({
   iteration,
   algorithm,
 }: BezierCurveChartProps) => {
+  // Start the timer for execution time
   const startTime = performance.now();
   let curvePoints;
   if (algorithm === "brute") {
@@ -38,6 +39,7 @@ const BezierCurveChart = ({
     }
   }
 
+  // Stop the timer for execution time
   const endTime = performance.now();
   const executionTime = endTime - startTime;
 
