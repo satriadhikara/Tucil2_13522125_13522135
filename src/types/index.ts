@@ -14,3 +14,11 @@ export type BezierCurveChartProps = {
   controlPoints: Point[];
   iteration: number;
 };
+
+export type PointInputProps = {
+  point: TempPoint;
+  index: number;
+  handleInputChange: (index: number, field: "x" | "y", value: string) => void;
+  deletePoint: (index: number) => void;
+  pointsLength: number;
+};

@@ -1,7 +1,7 @@
 const Navbar = () => {
   return (
     <>
-      <nav className="flex items-center justify-between p-6">
+      <nav className="flex items-center justify-between p-6 border-b-2">
         <div className="text-black text-2xl">Tucil 2 Stima</div>
         <div className="flex space-x-4">
           <a
