@@ -69,9 +69,7 @@ const BezierCurveChart = ({
         beginAtZero: true,
       },
     },
-    animation: {
-      easing: "linear",
-    },
+    animation: false,
   };
 
   return <Line data={data} options={options} />;
