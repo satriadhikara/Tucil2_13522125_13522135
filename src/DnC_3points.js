@@ -27,21 +27,3 @@ function cariTitikTengah(controlPoint1, controlPoint2) {
         y: (controlPoint1.y + controlPoint2.y) / 2
     };
 }
-
-// Fungsi yang buat cari bezier yang titiknya lebih dari 3 ternyata ini juga gaboleh
-/*
-function divideConquerBezierMultiple(points, t) {
-    if (points.length === 1) {
-        return points[0];
-    }
-
-    let newPoints = [];
-    for (let i = 0; i < points.length - 1; i++) {
-        let x = (1 - t) * points[i].x + t * points[i + 1].x;
-        let y = (1 - t) * points[i].y + t * points[i + 1].y;
-        newPoints.push({x: x, y: y});
-    }
-
-    return divideConquerBezierMultiple(newPoints, t);
-}
-*/
