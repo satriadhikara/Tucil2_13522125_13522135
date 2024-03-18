@@ -1,10 +1,9 @@
-import { Point } from "../types";
+import { Point } from "@/types";
 
-function generatePascalTriangle(numRows: number) {
-  const triangle = [];
-
+const generatePascalTriangle = (numRows: number) => {
+  const triangle: number[][] = [];
   for (let i = 0; i < numRows; i++) {
-    const row: number[] = [];
+    const row = [];
     for (let j = 0; j <= i; j++) {
       if (j === 0 || j === i) {
         row.push(1);
@@ -16,16 +15,16 @@ function generatePascalTriangle(numRows: number) {
   }
 
   return triangle;
-}
+};
 
 const generateBezierCurve3Points = (
   controlPoints: Point[],
-  iteration: number
-): Point[] => {
+  iterationLevel: number
+) => {
   const points = [];
 
-  for (let i = 0; i <= iteration; i++) {
-    const t = i / iteration;
+  for (let i = 0; i <= iterationLevel; i++) {
+    const t = i / iterationLevel;
     const x =
       Math.pow(1 - t, 2) * controlPoints[0].x +
       2 * (1 - t) * t * controlPoints[1].x +
@@ -42,16 +41,15 @@ const generateBezierCurve3Points = (
 
 const generateBezierCurveNPoints = (
   controlPoints: Point[],
-  iteration: number
-): Point[] => {
+  iterationLevel: number
+) => {
   const points = [];
   const n = controlPoints.length - 1;
-  const pascalTriangle = generatePascalTriangle(n + 1); // Generate one more row
+  const pascalTriangle = generatePascalTriangle(n + 1);
 
-  for (let i = 0; i <= iteration; i++) {
+  for (let i = 0; i <= iterationLevel; i++) {
     const point = { x: 0, y: 0 };
-    const t = i / iteration;
-
+    const t = i / iterationLevel;
     for (let j = 0; j <= n; j++) {
       const b = pascalTriangle[n][j] * Math.pow(1 - t, n - j) * Math.pow(t, j);
       point.x += b * controlPoints[j].x;
