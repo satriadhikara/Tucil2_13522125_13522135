@@ -13,6 +13,7 @@ export type TempIteration = number | string;
 export type BezierCurveChartProps = {
   controlPoints: Point[];
   iteration: number;
+  algorithm: "brute" | "dnc";
 };
 
 export type PointInputProps = {

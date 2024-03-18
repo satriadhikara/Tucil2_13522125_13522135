@@ -215,17 +215,11 @@ const Main = () => {
                   </DrawerHeader>
                   <DrawerDescription>
                     <div className="w-full flex items-center justify-center">
-                      {algorithm === "brute" ? (
-                        <BezierCurveChart
-                          controlPoints={finalPoints}
-                          iteration={iterationLevel + 1}
-                        />
-                      ) : (
-                        <div>
-                          <p className="font-bold">divide and conquer</p>
-                          <p>coming soon</p>
-                        </div>
-                      )}
+                      <BezierCurveChart
+                        controlPoints={finalPoints}
+                        iteration={iterationLevel + 1}
+                        algorithm={algorithm}
+                      />
                     </div>
                   </DrawerDescription>
                   <DrawerFooter>
