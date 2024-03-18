@@ -127,10 +127,8 @@ const Main = () => {
         <CardHeader className="flex justify-center items-center">
           <CardTitle>Bézier Curve</CardTitle>
           <CardDescription>
-            <p>Input at least 3 points to create a Bézier curve</p>
             <p>
-              NOTE: The iteration is exponential (in dnc algorithm), so it may
-              take a while to load
+              Input at least 3 points and the iteration to create bézier curve
             </p>
           </CardDescription>
         </CardHeader>
@@ -193,7 +191,10 @@ const Main = () => {
               />
 
               <DropdownMenu>
-                <DropdownMenuTrigger>
+                <DropdownMenuTrigger
+                  disabled={!isValidInput()}
+                  className="disabled:cursor-not-allowed"
+                >
                   <Button
                     disabled={!isValidInput()}
                     className="h-8 w-16 py-5 px-10 disabled:cursor-not-allowed"
