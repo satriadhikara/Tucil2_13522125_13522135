@@ -30,6 +30,14 @@ const BezierCurveChart = ({
         fill: false,
         pointRadius: 3,
       },
+      {
+        label: "Control Points",
+        data: controlPoints,
+        borderColor: "rgba(170,170,170,0.5)",
+        backgroundColor: "rgba(170,170,170,0.3)",
+        pointRadius: 5,
+        fill: false,
+      },
     ],
   };
 
