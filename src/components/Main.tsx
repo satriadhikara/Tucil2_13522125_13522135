@@ -214,13 +214,11 @@ const Main = () => {
                     </DrawerTitle>
                   </DrawerHeader>
                   <DrawerDescription>
-                    <div className="w-full flex items-center justify-center">
-                      <BezierCurveChart
-                        controlPoints={finalPoints}
-                        iteration={iterationLevel}
-                        algorithm={algorithm}
-                      />
-                    </div>
+                    <BezierCurveChart
+                      controlPoints={finalPoints}
+                      iteration={iterationLevel}
+                      algorithm={algorithm}
+                    />
                   </DrawerDescription>
                   <DrawerFooter>
                     <Slider
@@ -231,8 +229,6 @@ const Main = () => {
                       onValueChange={(value) => setIterationLevel(value[0])}
                     />
                     <span className="mb-4"></span>
-                    {/* TODO: Add the execution time */}
-                    <p>Execute time: ??? ms</p>
                     <DrawerClose>Close</DrawerClose>
                   </DrawerFooter>
                 </div>

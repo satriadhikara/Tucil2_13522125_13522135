@@ -1,5 +1,6 @@
 import { Line } from "react-chartjs-2";
 import "chart.js/auto";
+// import { performance } from "perf_hooks";
 import { BezierCurveChartProps } from "@/types";
 import {
   generateBezierCurve3Points,
@@ -14,6 +15,7 @@ const BezierCurveChart = ({
   iteration,
   algorithm,
 }: BezierCurveChartProps) => {
+  const startTime = performance.now();
   let curvePoints;
   if (algorithm === "brute") {
     // Generate the curve points using brute force algorithm
@@ -71,8 +73,18 @@ const BezierCurveChart = ({
     },
     animation: false,
   };
+  const endTime = performance.now();
+  const executionTime = endTime - startTime;
+  console.log(`Execution time: ${executionTime}ms`);
 
-  return <Line data={data} options={options} />;
+  return [
+    <>
+      <div className="w-full flex items-center justify-center">
+        <Line data={data} options={options} />
+      </div>
+      <p>Execution time: {executionTime.toFixed(2)}ms</p>
+    </>,
+  ];
 };
 
 export default BezierCurveChart;
