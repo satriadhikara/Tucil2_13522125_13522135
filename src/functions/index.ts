@@ -62,4 +62,49 @@ const generateBezierCurveNPoints = (
   return points;
 };
 
-export { generateBezierCurve3Points, generateBezierCurveNPoints };
+// Fungsi untuk yang 3 titik doang
+function divideConquerBezier3Points(control1: Point, control2: Point, control3: Point, banyakiterasi: number) {
+  let bezierPoints = [];
+  bezierPoints.push(control1); 
+  isiTitikCurve(bezierPoints, control1, control2, control3, 0, banyakiterasi);
+  bezierPoints.push(control3); 
+  return bezierPoints;
+}
+
+function isiTitikCurve(bezierPoints: Point[], control1: Point, control2: Point, control3: Point, iterasi: number, banyakiterasi: number) {
+  if (iterasi < banyakiterasi) {
+      let titikTengah1 = cariTitikTengah(control1, control2);
+      let titikTengah2 = cariTitikTengah(control2, control3);
+      let titikTengah3 = cariTitikTengah(titikTengah1, titikTengah2); 
+      iterasi++;
+      isiTitikCurve(bezierPoints, control1, titikTengah1, titikTengah3, iterasi, banyakiterasi); 
+      bezierPoints.push(titikTengah3); 
+      isiTitikCurve(bezierPoints, titikTengah3, titikTengah2, control3, iterasi, banyakiterasi); 
+  }
+}
+
+function cariTitikTengah(controlPoint1: Point, controlPoint2: Point) {
+    return {
+        x: (controlPoint1.x + controlPoint2.x) / 2,
+        y: (controlPoint1.y + controlPoint2.y) / 2
+    };
+}
+
+function divideAndConquerBezier(points: Point[], t: number) {
+  if (points.length === 1) {
+      return points[0];
+  }
+
+  let newPoints = [];
+  for (let i = 0; i < points.length - 1; i++) {
+      let x = (1 - t) * points[i].x + t * points[i + 1].x;
+      let y = (1 - t) * points[i].y + t * points[i + 1].y;
+      newPoints.push({x, y});
+  }
+
+  return divideAndConquerBezier(newPoints, t);
+}
+
+
+
+export { generateBezierCurve3Points, generateBezierCurveNPoints,divideAndConquerBezier, divideConquerBezier3Points, cariTitikTengah};
