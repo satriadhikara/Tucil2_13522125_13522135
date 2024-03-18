@@ -10,7 +10,7 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "./components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Drawer,
   DrawerClose,
@@ -21,8 +21,16 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Point, TempPoint } from "./types";
-import BezierCurveChart from "./components/BezierCurveChart";
+import { Point, TempPoint } from "@/types";
+import BezierCurveChart from "@/components/BezierCurveChart";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type TempIteration = number | string;
 
@@ -30,7 +38,7 @@ function App() {
   const [iteration, setIteration] = useState<TempIteration>("");
   const [iterationLevel, setIterationLevel] = useState<number>(0);
   const [staticIteration, setStaticIteration] = useState(iterationLevel);
-
+  const [algorithm, setAlgorithm] = useState<"brute" | "dnc">("brute");
   const [points, setPoints] = useState<TempPoint[]>([
     { x: 0, y: 0 },
     { x: 0, y: 0 },
@@ -187,28 +195,69 @@ function App() {
                     value={iteration}
                     onChange={(e) => handleIterationChange(e.target.value)}
                   />
-                  <DrawerTrigger>
-                    <Button
-                      onClick={convertPoints}
-                      disabled={!isValidInput()}
-                      className="h-8 w-16 py-5 px-10 disabled:cursor-not-allowed"
-                    >
-                      Curve it!
-                    </Button>
-                  </DrawerTrigger>
+
+                  <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      <Button
+                        disabled={!isValidInput()}
+                        className="h-8 w-16 py-5 px-10 disabled:cursor-not-allowed"
+                      >
+                        Curve it!
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuLabel>
+                        Choose the Algorithm
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DrawerTrigger>
+                        <DropdownMenuItem
+                          onClick={() => {
+                            convertPoints();
+                            setAlgorithm("brute");
+                          }}
+                        >
+                          Brute force
+                        </DropdownMenuItem>
+                      </DrawerTrigger>
+                      <DrawerTrigger>
+                        <DropdownMenuItem
+                          onClick={() => {
+                            convertPoints();
+                            setAlgorithm("dnc");
+                          }}
+                        >
+                          Divide and conquer
+                        </DropdownMenuItem>
+                      </DrawerTrigger>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
                 {isValidInput() && (
                   <DrawerContent className="h-5/6 flex items-center justify-center">
                     <div className="w-3/4">
                       <DrawerHeader>
-                        <DrawerTitle>Bezier Curve Result</DrawerTitle>
+                        <DrawerTitle>
+                          Bezier Curve Result (
+                          {algorithm === "brute"
+                            ? "Brute Force"
+                            : "Divide and Conquer"}
+                          )
+                        </DrawerTitle>
                       </DrawerHeader>
                       <DrawerDescription>
                         <div className="w-full flex items-center justify-center">
-                          <BezierCurveChart
-                            controlPoints={finalPoints}
-                            iteration={iterationLevel + 1}
-                          />
+                          {algorithm === "brute" ? (
+                            <BezierCurveChart
+                              controlPoints={finalPoints}
+                              iteration={iterationLevel + 1}
+                            />
+                          ) : (
+                            <div>
+                              <p className="font-bold">divide and conquer</p>
+                              <p>coming soon</p>
+                            </div>
+                          )}
                         </div>
                       </DrawerDescription>
                       <DrawerFooter>
