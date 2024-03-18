@@ -36,10 +36,9 @@ With building Bézier curves, we can learn about the algorithm used to create th
 
 List the ready features here:
 
-- Bézier Curve with Devide And Concuer
+- Bézier Curve with Divide And Conquer
 - Bézier Curve with Brute Force
 - Enter iterations dynamically
-- Dark mode (coming soon)
 
 <!-- ## Screenshots
 
@@ -78,19 +77,13 @@ npm run dev
 
 ## Project Status
 
-Project is: _in progress_
+Project is: _done_
 
 ## Room for Improvement
 
 Room for improvement:
 
 - Improve the ui
-- Improve the input validation
-
-To do:
-
-- Execute time
-- Devide and concuer algorithm
 
 ## Acknowledgements
 
