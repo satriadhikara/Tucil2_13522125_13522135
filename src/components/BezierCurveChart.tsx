@@ -4,19 +4,36 @@ import { BezierCurveChartProps } from "@/types";
 import {
   generateBezierCurve3Points,
   generateBezierCurveNPoints,
+  divideConquerBezier3Points,
+  divideAndConquerBezierNPoints,
 } from "@/functions";
 import { ChartOptions } from "chart.js";
 
 const BezierCurveChart = ({
   controlPoints,
   iteration,
+  algorithm,
 }: BezierCurveChartProps) => {
-  // Generate the curve points
   let curvePoints;
-  if (controlPoints.length === 3) {
-    curvePoints = generateBezierCurve3Points(controlPoints, iteration);
+  if (algorithm === "brute") {
+    // Generate the curve points using brute force algorithm
+    if (controlPoints.length === 3) {
+      curvePoints = generateBezierCurve3Points(controlPoints, iteration);
+    } else {
+      curvePoints = generateBezierCurveNPoints(controlPoints, iteration);
+    }
   } else {
-    curvePoints = generateBezierCurveNPoints(controlPoints, iteration);
+    // Generate the curve points using divide and conquer algorithm
+    if (controlPoints.length === 3) {
+      curvePoints = divideConquerBezier3Points(
+        controlPoints[0],
+        controlPoints[1],
+        controlPoints[2],
+        iteration
+      );
+    } else {
+      curvePoints = divideAndConquerBezierNPoints(controlPoints, iteration);
+    }
   }
 
   // Chart.js data and options

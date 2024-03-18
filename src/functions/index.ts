@@ -62,4 +62,92 @@ const generateBezierCurveNPoints = (
   return points;
 };
 
-export { generateBezierCurve3Points, generateBezierCurveNPoints };
+// Fungsi untuk yang 3 titik doang
+function divideConquerBezier3Points(
+  control1: Point,
+  control2: Point,
+  control3: Point,
+  banyakiterasi: number
+) {
+  const bezierPoints = [];
+  bezierPoints.push(control1);
+  isiTitikCurve(bezierPoints, control1, control2, control3, 0, banyakiterasi);
+  bezierPoints.push(control3);
+  return bezierPoints;
+}
+
+function isiTitikCurve(
+  bezierPoints: Point[],
+  control1: Point,
+  control2: Point,
+  control3: Point,
+  iterasi: number,
+  banyakiterasi: number
+) {
+  if (iterasi < banyakiterasi) {
+    const titikTengah1 = cariTitikTengah(control1, control2);
+    const titikTengah2 = cariTitikTengah(control2, control3);
+    const titikTengah3 = cariTitikTengah(titikTengah1, titikTengah2);
+    iterasi++;
+    isiTitikCurve(
+      bezierPoints,
+      control1,
+      titikTengah1,
+      titikTengah3,
+      iterasi,
+      banyakiterasi
+    );
+    bezierPoints.push(titikTengah3);
+    isiTitikCurve(
+      bezierPoints,
+      titikTengah3,
+      titikTengah2,
+      control3,
+      iterasi,
+      banyakiterasi
+    );
+  }
+}
+
+function cariTitikTengah(controlPoint1: Point, controlPoint2: Point) {
+  return {
+    x: (controlPoint1.x + controlPoint2.x) / 2,
+    y: (controlPoint1.y + controlPoint2.y) / 2,
+  };
+}
+
+function divideAndConquerBezier(points: Point[], t: number) {
+  if (points.length === 1) {
+    return points[0];
+  }
+
+  const newPoints = [];
+  for (let i = 0; i < points.length - 1; i++) {
+    const x = (1 - t) * points[i].x + t * points[i + 1].x;
+    const y = (1 - t) * points[i].y + t * points[i + 1].y;
+    newPoints.push({ x, y });
+  }
+
+  return divideAndConquerBezier(newPoints, t);
+}
+
+const divideAndConquerBezierNPoints = (
+  controlPoints: Point[],
+  iteration: number
+) => {
+  const points = [];
+  const stepSize = 1 / Math.pow(2, iteration);
+  for (let t = 0; t <= 1; t += stepSize) {
+    const point = divideAndConquerBezier(controlPoints, t);
+    points.push({ x: point.x, y: point.y });
+  }
+
+  return points;
+};
+
+export {
+  generateBezierCurve3Points,
+  generateBezierCurveNPoints,
+  divideAndConquerBezierNPoints,
+  divideConquerBezier3Points,
+};
