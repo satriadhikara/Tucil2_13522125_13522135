@@ -1,4 +1,4 @@
-# Tucil 2 Stima 13522125 13522135
+# Tucil 2 Stima 13522125 13522135 - Patan
 
 > Building a Bézier Curve with a Midpoint Algorithm based on Divide and Conquer and Brute force.
 > Live demo [_here_](https://tucil2-13522125-13522135.vercel.app/). <!-- If you have the project hosted somewhere, include the link here. -->
@@ -95,8 +95,8 @@ Give credit here.
 
 Created by
 
-- [Panji](https://github.com/satriadhikara) - 13522125
-- [Christian](https://github.com/ChrisCS50X) - 13522135
+- [Satriadhikara Panji Yudhistira](https://github.com/satriadhikara) - 13522125
+- [Christian Justin Hendrawan](https://github.com/ChrisCS50X) - 13522135
 
 <!-- Optional -->
 <!-- ## License -->
